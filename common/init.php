@@ -1,15 +1,16 @@
 <?php
+define('TPL_FRONT', ROOTDIR.'/tpl/front');
+define('TPL_ADMIN',  ROOTDIR.'/tpl/admin');
+
+include ROOTDIR."/common/function.php";
 include ROOTDIR."/config/config.php";
 include ROOTDIR."/class/mysql.class.php";
-include ROOTDIR."/class/generator.class.php";
-include ROOTDIR."/common/function.php";
 
 
 $db =  mysql::getHandle($db_config);
 
 if(!$db) {
-	echo "db not connection!";
-	exit;
+	exit("db not connection!");
 }
 $params = parseUrl($rewrite_config);
 

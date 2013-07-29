@@ -87,13 +87,13 @@ function parseFilter()
 	}
 	return $filter_arr;
 }
-function createUrl($action, $params = array(), $query = array())
+function createUrl($app, $action, $params = array(), $query = array())
 {
 	global $rewrite_config;
 	$rewrite = $rewrite_config;
 	$pattern = '/(\(\?P<(.*?)>(?:.*?)\))/';
 
-	$values = array("action"=>$action);
+	$values = array("app"=>$app, "action"=>$action);
 	$values = array_merge($values ,$params);
 	foreach($rewrite as $key => $map) {
 		if(preg_match_all($pattern ,$key ,$matches)) {

@@ -9,9 +9,17 @@ $db_config = array(
 
 
 $rewrite_config = array(
-		'/'=>array('action'=>'index'),
-		'/test/?'=>array('action'=>'test'),
-		'/detail/(?P<id>\d+)/?'=>array('action'=>'detail'),
+		//首页
+		'/'=>array('app'=>'front','action'=>'index'),
+
+		//管理后台
+		'/admin/?'=>array('app'=>'admin','action'=>'index'),
+		'/admin/header/?'=>array('app'=>'admin','action'=>'header'),
+		'/admin/menu/?'=>array('app'=>'admin','action'=>'menu'),
+		'/admin/main/?'=>array('app'=>'admin','action'=>'main'),
+		'/admin/user/?'=>array('app'=>'admin','action'=>'user')
+
+		//网站主管理
 		
 );
 
