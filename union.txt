@@ -1,0 +1,323 @@
+CREATE TABLE `un_users` (
+  `id` int(8) NOT NULL auto_increment,
+  `email` varchar(64) NOT NULL,
+  `password` char(32) NOT NULL,
+  `nickname` varchar(32) NOT NULL,
+  `activateid` int(8) NOT NULL,
+  `regtime` datetime NOT NULL,
+  `regip` char(15) NOT NULL,
+  `logintime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `loginip` char(15) NOT NULL default '0.0.0.0',
+  `loginnum` int(8) NOT NULL default '0',
+  `lockinfo` varchar(255) default NULL,
+  `status` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_account` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) NOT NULL,
+  `info` varchar(64) NOT NULL,
+  `address` varchar(255) default NULL,
+  `contact` varchar(255) NOT NULL,
+  `bank` int(8) NOT NULL,
+  `bankcard` varchar(32) NOT NULL,
+  `idcard` varchar(32) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `uid` (`uid`),
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_site` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `type` int(5) NOT NULL,
+  `info` text,
+  `pr` varchar(32) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `updatetime` datetime NOT NULL,
+  `denyinfo` varchar(255) default NULL,
+  `status` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_sitetype` (
+  `id` int(8) NOT NULL auto_increment,
+  `pid` int(8) NOT NULL default '0',
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--adstype:CPC,CPA,CPS,CPM
+CREATE TABLE `un_ads` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(9) NOT NULL default '0',
+  `logo` varchar(255) default NULL,
+  `name` varchar(32) default NULL,
+  `adstype` int(8) NOT NULL,
+  `adsinfo` varchar(120) default NULL,  
+  `price` double(10,4) NOT NULL default '0.0000',
+  `priceadv` double(10,4) default '0.0000',
+  `expire` date NOT NULL default '0000-00-00',
+  `isaudit` tinyint(1) NOT NULL default 0,
+  `isassign` tinyint(1) NOT NULL default 0,
+  `commend` tinyint(1) NOT NULL default 0,
+  `createtime` datetime NOT NULL,
+  `updatetime` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_audit` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) NOT NULL,
+  `siteid` int(8) NOT NULL,
+  `adsid` int(8) NOT NULL,
+  `assigncode` varchar(32) NOT NULL,
+  `audituser` int(8) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `audittime` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `site_ads` (`siteid`,'adsid')
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_assigncode` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) NOT NULL,
+  `siteid` int(8) NOT NULL,
+  `adsid` int(8) NOT NULL,
+  `assigncode` varchar(32) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `audittime` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `site_ads_code` (`siteid`,'adsid','code')
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--itmetype:TXT,IMG,FLASH
+CREATE TABLE `un_adscode` (
+  `id` int(8) NOT NULL auto_increment,
+  `adsid` int(8) NOT NULL default '0',
+  `adsitemtype` int(8) default NULL,
+  `name` varchar(32) default NULL,
+  `adstype` int(8) NOT NULL,
+  `content` varchar(120) default NULL,
+  `commend` tinyint(1) NOT NULL default 0,
+  `createtime` datetime NOT NULL,
+  `updatetime` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_report_cpc` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) default '0',
+  `siteid` int(8) default '0',
+  `linkuid` int(8) default '0',
+  `adsid` int(8) default '0',
+  `pv0` int(8) default '0',
+  `pc0` int(8) default '0',
+  `uc0` int(8) default '0',
+  `ip0` int(8) default '0',
+  `pv1` int(8) default '0',
+  `pc1` int(8) default '0',
+  `uc1` int(8) default '0',
+  `ip1` int(8) default '0',
+  `pv2` int(8) default '0',
+  `pc2` int(8) default '0',
+  `uc2` int(8) default '0',
+  `ip2` int(8) default '0',
+  `price` double(12,4) default '0.0000',
+  `priceadv` double(12,4) default '0.0000',
+  `money0` double(12,4) default '0.0000',
+  `money1` double(12,4) default '0.0000',
+  `money2` double(12,4) default '0.0000',
+  `day` date default '0000-00-00',
+  `addtime` datetime default '0000-00-00 00:00:00',
+  `status` tinyint(3) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_report_cpa` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) default '0',
+  `siteid` int(8) default '0',
+  `linkuid` int(8) default '0',
+  `adsid` int(8) default '0',
+  `pv0` int(8) default '0',
+  `pc0` int(8) default '0',
+  `uc0` int(8) default '0',
+  `ip0` int(8) default '0',
+  `pv1` int(8) default '0',
+  `pc1` int(8) default '0',
+  `uc1` int(8) default '0',
+  `ip1` int(8) default '0',
+  `pv2` int(8) default '0',
+  `pc2` int(8) default '0',
+  `uc2` int(8) default '0',
+  `ip2` int(8) default '0',
+  `price` double(12,4) default '0.0000',
+  `priceadv` double(12,4) default '0.0000',
+  `money0` double(12,4) default '0.0000',
+  `money1` double(12,4) default '0.0000',
+  `money2` double(12,4) default '0.0000',
+  `day` date default '0000-00-00',
+  `addtime` datetime default '0000-00-00 00:00:00',
+  `status` tinyint(3) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_report_cpm` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) default '0',
+  `siteid` int(8) default '0',
+  `linkuid` int(8) default '0',
+  `adsid` int(8) default '0',
+  `pv0` int(8) default '0',
+  `pc0` int(8) default '0',
+  `uc0` int(8) default '0',
+  `ip0` int(8) default '0',
+  `pv1` int(8) default '0',
+  `pc1` int(8) default '0',
+  `uc1` int(8) default '0',
+  `ip1` int(8) default '0',
+  `pv2` int(8) default '0',
+  `pc2` int(8) default '0',
+  `uc2` int(8) default '0',
+  `ip2` int(8) default '0',
+  `price` double(12,4) default '0.0000',
+  `priceadv` double(12,4) default '0.0000',
+  `money0` double(12,4) default '0.0000',
+  `money1` double(12,4) default '0.0000',
+  `money2` double(12,4) default '0.0000',
+  `day` date default '0000-00-00',
+  `addtime` datetime default '0000-00-00 00:00:00',
+  `status` tinyint(3) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_report_cps` (
+  `id` int(8) NOT NULL auto_increment,
+  `uid` int(8) default '0',
+  `siteid` int(8) default '0',
+  `linkuid` int(8) default '0',
+  `adsid` int(8) default '0',
+  `pv0` int(8) default '0',
+  `pc0` int(8) default '0',
+  `uc0` int(8) default '0',
+  `ip0` int(8) default '0',
+  `pv1` int(8) default '0',
+  `pc1` int(8) default '0',
+  `uc1` int(8) default '0',
+  `ip1` int(8) default '0',
+  `pv2` int(8) default '0',
+  `pc2` int(8) default '0',
+  `uc2` int(8) default '0',
+  `ip2` int(8) default '0',
+  `price` double(12,4) default '0.0000',
+  `priceadv` double(12,4) default '0.0000',
+  `money0` double(12,4) default '0.0000',
+  `money1` double(12,4) default '0.0000',
+  `money2` double(12,4) default '0.0000',
+  `day` date default '0000-00-00',
+  `addtime` datetime default '0000-00-00 00:00:00',
+  `status` tinyint(3) default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_orders` (
+  `orderid` int(8) NOT NULL auto_increment,
+  `uid` int(8) default '0',
+  `siteid` int(8) default '0',
+  `linkuid` int(8) default '0',
+  `adsid` int(8) default '0',
+  `orderno` mediumint(8) NOT NULL default '0',
+  `price` double(12,4) default '0.0000',
+  `money` double(12,4) default '0.0000',
+  `ordertime` datetime default '0000-00-00 00:00:00',
+  `createtime` datetime default '0000-00-00 00:00:00',
+  `confirmtime` date default '0000-00-00',
+  `status` tinyint(3) default '0',
+  PRIMARY KEY  (`orderid`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_message` (
+  `id` int(8) NOT NULL auto_increment,
+  `pid` int(8) NOT NULL,
+  `senduser` int(8) NOT NULL,
+  `touser` int(8) default '0',
+  `subject` varchar(100) NOT NULL,
+  `content` mediumtext NOT NULL,
+  `isview` tinyint(1) NOT NULL default '0',
+  `isadmin` tinyint(1) NOT NULL default '1',
+  `createtime` datetime NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+--newstype:union,advert,placard
+CREATE TABLE `un_news` (
+  `id` int(8) NOT NULL auto_increment,
+  `newstype` int(8),
+  `tite` varchar(100) NOT NULL default '',
+  `content` mediumtext NOT NULL,
+  `createtime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `isview` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+CREATE TABLE `un_admin` (
+  `id` int(8) NOT NULL auto_increment,
+  `roleid` int(8) NOT NULL,
+  `username` varchar(32) NOT NULL default '',
+  `password` char(32) NOT NULL,
+  `info` varchar(255) NOT NULL,
+  `createtime` datetime NOT NULL,
+  `updatetime` datetime NOT NULL,
+  `logintime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `loginip` char(15) NOT NULL,
+  `loginnum` int(8) NOT NULL default '0',
+  `status` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_role` (
+  `id` int(8) NOT NULL auto_increment,
+  `name` varchar(32) NOT NULL default '',
+  `action`text,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_loginlog` (
+  `id` int(8) NOT NULL auto_increment,
+  `username` varchar(32) NOT NULL,
+  `action` varchar(255) NOT NULL,
+  `data` text,
+  `loginip` char(15) NOT NULL,
+  `logintime` datetime NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE `un_sessions` (
+  `id` char(32) NOT NULL,
+  `expires` int(10)  NOT NULL default '0',
+  `data` text,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `un_settings` (
+  `id` int(8) NOT NULL auto_increment,
+  `title` varchar(32) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY  (`title`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
