@@ -17,6 +17,7 @@ $rewrite_config = array(
 		'/admin/header/?'=>array('app'=>'admin','action'=>'header'),
 		'/admin/menu/?'=>array('app'=>'admin','action'=>'menu'),
 		'/admin/main/?'=>array('app'=>'admin','action'=>'main'),
+                '/admin/news/?'=>array('app'=>'admin','action'=>'news'),
 		'/admin/user/?'=>array('app'=>'admin','action'=>'user')
 
 		//网站主管理
