@@ -328,3 +328,49 @@ function updateByRow($row, $table, $where='')
 	$db->query($sql);
 
 }
+
+function paginate($page, $total_pages, $targetpage, $pagename='page') {
+    $page_len = 7;
+    $init = 1;
+    $max_p = $total_pages;
+    $pageoffset = 2;
+
+    $pagination = '<div class="page">';
+    $pagination.="<span>$page/$total_pages</span> ";
+    if ($page != 1) {
+        $pagination.="<a href=\"" . $targetpage . "&$pagename=1\">第一页</a> ";
+        $pagination.="<a href=\"" . $targetpage . "&$pagename=" . ($page - 1) . "\">上一页</a>";
+    } else {
+        $pagination.="第一页 ";
+        $pagination.="上一页";
+    }
+    if ($total_pages > $page_len) {
+        if ($page <= $pageoffset) {
+            $init = 1;
+            $max_p = $page_len;
+        } else {
+            if ($page + $pageoffset >= $total_pages + 1) {
+                $init = $total_pages - $page_len + 1;
+            } else {
+                $init = $page - $pageoffset;
+                $max_p = $page + $pageoffset;
+            }
+        }
+    }
+    for ($i = $init; $i <= $max_p; $i++) {
+        if ($i == $page) {
+            $pagination.=' <span>' . $i . '</span>';
+        } else {
+            $pagination.=" <a href=\"" . $targetpage . "&$pagename=" . $i . "\">" . $i . "</a>";
+        }
+    }
+    if ($page != $total_pages) {
+        $pagination.=" <a href=\"" . $targetpage . "&$pagename=" . ($page + 1) . "\">下一页</a> ";
+        $pagination.="<a href=\"" . $targetpage . "&$pagename={$total_pages}\">最后一页</a>";
+    } else {
+        $pagination.="下一页 ";
+        $pagination.="最后一页";
+    }
+    $pagination.='</div>';
+    return $pagination;
+}
